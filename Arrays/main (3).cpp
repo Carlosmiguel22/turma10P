@@ -1,25 +1,92 @@
 #include <iostream>
-#include <locale.h>
 #include <string>
+#include <locale.h>
+#include <cstdlib>
+#include <time.h>
 using namespace std;
+
 int main()
 {
-    setlocale(LC_ALL, "Portuguese");
-    string nomes[5]={};
-    char resposta;
-    do
-    {
-    for(int i=0;i<5;i++)
-    {
-        cout << "fala ai o "<<i+1<<"º nome:";
-        cin >> nomes[i];
-    }
-    for (int i=4;i>=0;i--)
-    {
-        cout << nomes[i]<<endl;
-    }
-    cout << "deseja sair? (S/N)";
-    cin >>resposta;
-    }while (resposta!='s');
-    return 0;
+	setlocale(LC_ALL, "Portuguese");
+	srand(time(0));
+	int nums[5], guess[5], Troca, Aux, Certos = 0;
+
+
+	for (int i = 0; i < 5; i++)
+	{
+		nums[i] = (rand() % 50) + 1;
+	}
+	do
+	{
+		int iguais = 0;
+		for (int i = 0; j < 4; ++j)
+		{
+			for (int ii = 0; i < 4; ++i)
+			{
+				if (i != ii + 1)
+				{
+					if (lotaria[i] == lotaria[ii + 1])
+					{
+						lotaria[i] = (rand() % 50) + 1;
+						iguais++;
+					}
+				}
+			}
+		}
+	} while (iguais != 0);
+
+	do
+	{
+		Troca = 0;
+
+		for (int i = 0; i < 4; i++)
+		{
+			if (nums[i] > nums[i + 1])
+			{
+				Troca++;
+				Aux = nums[i];
+				nums[i] = nums[i + 1];
+				nums[i + 1] = Aux;
+			}
+		}
+
+	} while (Troca != 0);
+
+
+	for (int i = 0; i < 5; i++)
+	{
+		cout << "Escolhe um número entre 1 e 50: ";
+		cin >> guess[i];
+		while (guess[i] < 1 || guess[i] > 50)
+		{
+			cout << "O número tem de ser entre 1 e 50: ";
+			cin >> guess[i];
+		}
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		if (nums[i] == guess[i])
+		{
+			Certos++;
+		}
+	}
+
+	if (Certos == 5)
+	{
+		cout << "BRAVO, GANHASTE 1 MILHÃO DE BITCOIN\n";
+	}
+	else
+	{
+		cout << "\nNão ganhaste a loteria. Só acertaste" << Certos << "\n";
+	}
+
+	cout << "Os números certos são: \n";
+	for (int i = 0; i < 4; i++)
+	{
+		cout << nums[i] << " | ";
+	}
+	cout << nums[4];
+
+	return 0;
 }
